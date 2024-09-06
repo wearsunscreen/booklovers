@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 import { PUBLIC_ERROR_MESSAGE } from '$env/static/public'
 
-export const messageStore = writable({ show: false, message: 'blank', type: 'success' })
+const messageStore = writable({ show: false, message: '', type: 'error' })
 
 export default {
     subscribe: messageStore.subscribe,
