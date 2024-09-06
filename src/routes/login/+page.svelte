@@ -12,5 +12,4 @@
 	<title>Login</title>
 </svelte:head>
 
-<h2>login</h2>
-<!-- <LoginWithGoogle /> -->
+<LoginWithGoogle />
