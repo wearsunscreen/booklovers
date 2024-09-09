@@ -11,7 +11,7 @@ import {
 import { is_client } from 'svelte/internal';
 import { getFirestore } from 'firebase/firestore';
 import { getApps, initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
+// import { getAnalytics } from 'firebase/analytics';
 
 const firebaseConfig = {
     apiKey: PUBLIC_API_KEY,
@@ -25,9 +25,9 @@ const firebaseConfig = {
 
 if (getApps().length === 0) {
     initializeApp(firebaseConfig);
-    if (is_client) {
-        getAnalytics();
-    }
+    // if (is_client) {
+    //     getAnalytics();
+    // }
 }
 
 export const db = getFirestore();

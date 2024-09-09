@@ -1,8 +1,12 @@
-import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, 
+    GoogleAuthProvider, 
+    signInWithPopup, 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword, 
+    sendPasswordResetEmail} from "firebase/auth";
 
 export async function loginWithGoogle() {
-    const auth = getAuth();
-    const userCredential = await signInWithPopup(auth, new GoogleAuthProvider());
+    const userCredential = await signInWithPopup(getAuth(), new GoogleAuthProvider());
     return userCredential.user;
 }
 
@@ -12,7 +16,15 @@ export async function logout() {
 }
 
 export async function registerWithEmailAndPassword(email, password) {
-    const auth = getAuth();
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const userCredential = await createUserWithEmailAndPassword(getAuth(), email, password);
     return userCredential.user;
+}
+
+export async function loginWithEmailAndPassword(email, password) {
+    const userCredential = await signInWithEmailAndPassword(getAuth(), email, password);
+    return userCredential.user;
+}
+
+export async function mailResetPasswordEmail(email) {
+    await sendPasswordResetEmail(getAuth(), email);
 }
