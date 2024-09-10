@@ -1,8 +1,11 @@
 <script>
+	import { goto } from '$app/navigation';
 	import AuthForm from '$lib/components/Auth/AuthForm.svelte';
 	import LoginWithGoogle from '$lib/components/Auth/LoginWithGoogle.svelte';
 	import { loginWithEmailAndPassword } from '$lib/firebase/auth.client';
 	import messagesStore from '$lib/stores/messages.store';
+	import { page } from '$app/stores';
+	import { afterLogin } from '$lib/helpers/route.helper';
 
 	async function onLogin(e) {
 		try {
@@ -15,6 +18,8 @@
 			}
 
 			const user = await loginWithEmailAndPassword(email, password);
+			messagesStore.showSuccess('Logged in successfully');
+			await afterLogin($page.url, user.uid);
 		} catch (error) {
 			if (['auth/user-not-found', 'auth/wrong-password'].includes(error.code)) {
 				messagesStore.showError('Invalid email or password');
