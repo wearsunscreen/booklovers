@@ -28,3 +28,10 @@ export async function loginWithEmailAndPassword(email, password) {
 export async function mailResetPasswordEmail(email) {
     await sendPasswordResetEmail(getAuth(), email);
 }
+
+// export async function sendJWTToken() {
+//     const auth = getAuth();
+//     const user = auth.currentUser;
+//     fetch()
+//     return user.getIdToken();
+// }
