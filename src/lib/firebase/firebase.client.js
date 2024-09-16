@@ -24,10 +24,10 @@ const firebaseConfig = {
 };
 
 if (getApps().length === 0) {
-    initializeApp(firebaseConfig);
-    // if (is_client) {
-    //     getAnalytics();
-    // }
+    const app = initializeApp(firebaseConfig);
+    if (is_client) {
+        getAnalytics(app);
+    }
 }
 
 export const db = getFirestore();

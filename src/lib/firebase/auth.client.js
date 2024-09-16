@@ -28,3 +28,17 @@ export async function loginWithEmailAndPassword(email, password) {
 export async function mailResetPasswordEmail(email) {
     await sendPasswordResetEmail(getAuth(), email);
 }
+
+export async function sendJWTToken() {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (!user) {
+        return;
+    }
+
+    const token = await user.getIdToken(true);
+    const response = await fetch('/token', {
+        method: 'POST',
+        body: JSON.stringify({ token, email: user.email }),
+    });
+}

@@ -5,16 +5,25 @@
 	import { afterLogin } from '$lib/helpers/route.helper';
 
 	async function loginGoogle() {
+		let user = undefined;
 		try {
-			const user = await loginWithGoogle();
+			user = await loginWithGoogle();
+			messagesStore.showSuccess('Login successful', user.email)
 			console.log(user);
-			await afterLogin($page.url, user.uid);
 		} catch (e) {
 			if (e.code === 'auth/popup-closed-by-user') {
 				return;
 			}
 			console.log(e);
 			messagesStore.showError(e.message);
+			return;
+		}
+		try {
+			await afterLogin($page.url, user.uid);
+		} catch (e) {
+			console.log("error in afterlogin" + e.message);
+			messagesStore.showError(e.message);
+			return;
 		}
 	}
 </script>
