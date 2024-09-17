@@ -4,8 +4,34 @@
 	import 'bootstrap/dist/css/bootstrap.min.css';
 	import Nav from '$lib/components/Nav.svelte';
 	import messageStore from '$lib/stores/messages.store';
-	import { onMount } from 'svelte';
 	import '$lib/firebase/firebase-client'
+	import { onMount } from 'svelte';
+	import { sendJWTToken } from '$lib/firebase/auth.client';
+	let timerId;
+
+	async function sendServerToken() {
+		try {
+			await sendJWTToken();
+		} catch(e) {
+			clearInterval(timerId);
+			messageStore.show('error', 'Error sending token to server');
+			console.error('error', e);
+		}
+	}
+
+	onMount(async () => {
+		try {
+			await sendServerToken();
+			timerId = setInterval(async () => {
+				await sendServerToken();
+			}, 1000 * 60 * 10);
+		} catch (error) {
+			console.error('error', error);
+		}
+		return () => {
+			clearInterval(timerId);
+		}	
+	});
 
 	function closeMessage() {
         console.log('closeMessage');

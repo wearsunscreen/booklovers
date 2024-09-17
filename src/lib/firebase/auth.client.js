@@ -13,6 +13,7 @@ export async function loginWithGoogle() {
 export async function logout() {
     const auth = getAuth();
     await auth.signOut();
+    await fetch('/logout'); 
 }
 
 export async function registerWithEmailAndPassword(email, password) {
