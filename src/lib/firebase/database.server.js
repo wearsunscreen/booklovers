@@ -30,3 +30,12 @@ export async function addBook(book, userId) {
     // })
     return bookRef.id;
 }
+
+export async function getBook(id) {
+    const bookCollection = db.collection('books');
+    const bookRef = await bookCollection.doc(id).get();
+    if (bookRef.exists) {
+        return { id: bookRef.id, ...bookRef.data() };
+    }
+    return null;
+}
