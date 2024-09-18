@@ -1,13 +1,16 @@
 import validateBook from '$lib/validators/book.validator';
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
+import { addBook } from '$lib/firebase/database.server';
 
 export const actions = {
-    default: async ({request, locals}) => {
+    default: async ({ request, locals }) => {
         const formData = await request.formData();
         const data = await validateBook(formData);
         if (!data.success) {
             return fail(422, data);
         }
-        return { success: true }
+        const bookId = await addBook(data.book, locals.user.id);
+
+        throw redirect(303, `/book/${bookId}`);
     }
 }

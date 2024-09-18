@@ -71,7 +71,6 @@
 			accept="image/*"
 			name="main_picture"
 			type="file"
-            value={form?.main_picture || ''}
             class:is-invalid={form?.error_main_picture}
 		/>
         {#if form?.error_main_picture}
@@ -86,7 +85,6 @@
 			accept="image/*"
 			name="small_picture"
 			type="file"
-            value={form?.small_picture || ''}
             class:is-invalid={form?.error_small_picture}
 		/>
         {#if form?.error_small_picture}
