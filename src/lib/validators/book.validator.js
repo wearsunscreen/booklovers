@@ -1,6 +1,6 @@
 import yup from 'yup';
 
-export default async function validate(formData) {
+export default async function validate(formData, edit = false) {
     const schema = yup.object({
         title: yup.string().required('Book title is required.').min(4).max(40),
         author: yup.string().required('Author is required').min(5).max(200),
@@ -8,7 +8,6 @@ export default async function validate(formData) {
         description: yup.string().required('Description').min(5).max(4500),
         small_picture: yup
             .mixed()
-            .required()
             .test('fileType', 'The file must be an image', (value) => {
                 if (value && value.type) {
                     return ['image/png', 'image/jpeg'].includes(value.type);
@@ -23,7 +22,6 @@ export default async function validate(formData) {
             }),
         main_picture: yup
             .mixed()
-            .required()
             .test('fileType', 'The file must be an image', (value) => {
                 if (value && value.type) {
                     return ['image/png', 'image/jpeg'].includes(value.type);
